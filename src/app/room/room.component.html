@@ -1,0 +1,67 @@
+<div class="container">
+  <div class="row">
+    <div [hidden]="submitted" style="width: 400px;" class="col-4">
+      <h2>Create Room</h2>
+      <form>
+        <div class="form-group">
+          <label for="name">Room Name</label>
+          <input type="text" class="form-control" id="name" required [(ngModel)]="room.name" name="name">
+        </div>
+        <div class="form-group row">
+          <div class="col-2">
+            <button type="button" class="btn btn-outline-secondary" style="width: 50px" (click)="addNewPoint()">+</button>
+          </div>
+          <div class="col-2">
+            <button type="button" class="btn btn-outline-secondary" style="width: 50px" (click)="removeNewPoint()">-</button>
+          </div>
+        </div>
+        <div *ngFor="let point of room.points; let i = index" class="form-group row">
+          <div class="col-6">
+            <label for="xValue{{i}}">x{{i+1}} </label>
+            <input type="number" class="form-control" id="xValue{{i}}" required [(ngModel)]="room.points[i].xValue" name="xValue{{i}}">
+          </div>
+          <div class="col-6">
+            <label for="yValue{{i}}">y{{i+1}}</label>
+            <input type="number" class="form-control" id="yValue{{i}}" required [(ngModel)]="room.points[i].yValue" name="yValue{{i}}">
+          </div>
+        </div>
+        <button type="button" class="btn btn-success" *ngIf="updateOrCreate" (click)="onSubmit()">Submit</button>
+        <button type="button" class="btn btn-success" *ngIf="!updateOrCreate" (click)="updateRoom()">Update</button>
+      </form>
+    </div>
+
+
+    <div class="col-8">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h2>Employee List</h2>
+        </div>
+        <div class="panel-body">
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th>Name</th>
+              <th>Points</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let room of rooms | async">
+              <td>{{room.name}}</td>
+              <td>
+                 <div class="row">
+                   <div *ngFor="let point of room.points">({{point.xValue}}, {{point.yValue}}) </div>
+                 </div>
+              </td>
+              <td><button (click)="deleteRoom(room.id)" class="btn btn-danger">Delete</button>
+<!--                <button (click)="onUpdate(room)" class="btn btn-info" style="margin-left: 5px">Update</button>-->
+                <button (click)="printGraph(room.id)" class="btn btn-info" style="margin-left: 5px">Print</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
