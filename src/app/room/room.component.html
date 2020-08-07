@@ -18,16 +18,19 @@
         <div *ngFor="let point of room.points; let i = index" class="form-group row">
           <div class="col-6">
             <label for="xValue{{i}}">x{{i+1}} </label>
-            <input type="number" class="form-control" id="xValue{{i}}" required [(ngModel)]="room.points[i].xValue" name="xValue{{i}}">
+            <input type="number" min = "10" class="form-control" id="xValue{{i}}" required [(ngModel)]="room.points[i].xValue" name="xValue{{i}}">
           </div>
           <div class="col-6">
             <label for="yValue{{i}}">y{{i+1}}</label>
-            <input type="number" class="form-control" id="yValue{{i}}" required [(ngModel)]="room.points[i].yValue" name="yValue{{i}}">
+            <input type="number" step="1" class="form-control" id="yValue{{i}}" required [(ngModel)]="room.points[i].yValue" name="yValue{{i}}">
           </div>
         </div>
         <button type="button" class="btn btn-success" *ngIf="updateOrCreate" (click)="onSubmit()">Submit</button>
         <button type="button" class="btn btn-success" *ngIf="!updateOrCreate" (click)="updateRoom()">Update</button>
       </form>
+      <div>
+        message: {{message}}
+      </div>
     </div>
 
 
@@ -54,7 +57,7 @@
               </td>
               <td><button (click)="deleteRoom(room.id)" class="btn btn-danger">Delete</button>
 <!--                <button (click)="onUpdate(room)" class="btn btn-info" style="margin-left: 5px">Update</button>-->
-                <button (click)="printGraph(room.id)" class="btn btn-info" style="margin-left: 5px">Print</button>
+                <!--<button (click)="printGraph(room.id)" class="btn btn-info" style="margin-left: 5px">Print</button>-->
               </td>
             </tr>
             </tbody>
