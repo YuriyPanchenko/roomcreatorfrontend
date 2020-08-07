@@ -11,6 +11,7 @@ import {Observable} from 'rxjs';
   providers: [RoomService],
 })
 export class RoomComponent implements OnInit {
+  message: string = '';
   rooms: Observable<Room[]>
   countOfPoints = 4;
   room: Room;
@@ -31,9 +32,10 @@ export class RoomComponent implements OnInit {
   }
 
   save() {
-    console.log(this.room);
+    this.message = '';
     this.roomService.createRoom(this.room)
-        .subscribe(data => console.log(data), error => console.log(error));
+        .subscribe( text => this.message += text.toString());
+    console.log(this.message)
     this.newRoom();
   }
 
@@ -44,13 +46,15 @@ export class RoomComponent implements OnInit {
 
   addNewPoint() {
     this.room.points.push(new Point());
-    this.countOfPoints++;
+    this.room.points.push(new Point());
+    this.countOfPoints+=2;
   }
 
   removeNewPoint() {
     if(this.countOfPoints > 4){
       this.room.points.splice(this.countOfPoints - 1, 1);
-      this.countOfPoints --;
+      this.room.points.splice(this.countOfPoints - 2, 1);
+      this.countOfPoints -=2;
     }
   }
 
