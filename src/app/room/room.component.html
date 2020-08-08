@@ -56,15 +56,22 @@
                  </div>
               </td>
               <td><button (click)="deleteRoom(room.id)" class="btn btn-danger">Delete</button>
-<!--                <button (click)="onUpdate(room)" class="btn btn-info" style="margin-left: 5px">Update</button>-->
-                <!--<button (click)="printGraph(room.id)" class="btn btn-info" style="margin-left: 5px">Print</button>-->
+                <!--<button (click)="onUpdate(room)" class="btn btn-info" style="margin-left: 5px">Update</button>-->
+                <button (click)="printGraph(room.points)" class="btn btn-info" style="margin-left: 5px">Print</button>
               </td>
             </tr>
             </tbody>
           </table>
+          <div class="container ">
+
+            <h3 class="text-center" style="margin-top: 50px">Picture:</h3>
+            <canvas id="stage" width=500px height=500px class="picture-margin-100"></canvas>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+
 

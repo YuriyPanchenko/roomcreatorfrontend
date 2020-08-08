@@ -34,8 +34,7 @@ export class RoomComponent implements OnInit {
   save() {
     this.message = '';
     this.roomService.createRoom(this.room)
-        .subscribe( text => this.message += text.toString());
-    console.log(this.message)
+        .subscribe( text => {this.message += text.toString(); this.reloadData()});
     this.newRoom();
   }
 
@@ -79,14 +78,51 @@ export class RoomComponent implements OnInit {
     this.updateOrCreate = true;
   }
 
-  printGraph(id: number) {
-
-  }
-
   onUpdate(room: Room) {
     this.updateOrCreate = false;
     this.countOfPoints = room.points.length;
     this.room = room;
   }
 
+  printGraph(points: Point[]) {
+
+
+    var minY = points[0].yValue;
+    var maxY = points[0].yValue;
+    var minX = points[0].xValue;
+    var maxX = points[0].xValue;
+
+    for (let i = 1; i < points.length; i++) {
+      if (minX > points[i].xValue)
+        minX = points[i].xValue;
+      if (maxX < points[i].xValue)
+        maxX = points[i].xValue;
+      if (minY > points[i].yValue)
+        minY = points[i].yValue;
+      if (maxY > points[i].yValue)
+        maxY = points[i].yValue;
+    }
+    var k;
+    if((maxY - minY) > 5 || (maxX - minX) > 5)
+      if((maxY - minY) > (maxX - minX))
+        k = 500/(maxY - minY);
+      else
+        k = 500/(maxX - minX);
+    else
+      k = 100;
+
+    var canvas = document.getElementById('stage');
+    // @ts-ignore
+    if (canvas.getContext) {
+      // @ts-ignore
+      var ctx = canvas.getContext('2d');
+      // @ts-ignore
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.beginPath();
+      ctx.moveTo((points[0].xValue - minX) * k, (points[0].yValue - minY) * k);
+      for(let i = 1; i < points.length; i++)
+        ctx.lineTo((points[i].xValue - minX) * k, (points[i].yValue - minY) * k);
+      ctx.fill();
+    }
+  }
 }
